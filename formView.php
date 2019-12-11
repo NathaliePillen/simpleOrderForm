@@ -1,66 +1,91 @@
 <?php
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST["submit"])) {
+    $_SESSION['email'] = htmlspecialchars($_POST['email']);
+    $_SESSION['street'] = htmlspecialchars($_POST['street']);
+    $_SESSION['streetnumber'] = htmlspecialchars($_POST['streetnumber']);
+    $_SESSION['city'] = htmlspecialchars($_POST['city']);
+    $_SESSION['zipcode'] = htmlspecialchars($_POST['zipcode']);
+    }
+        
+    $emailerror = $streeterror = $numbererror = $cityerror = $cityerror = $ziperror = $submiterror = "";
+    $email = $street = $streetnumber = $city = $zipcode = "";
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+             
         //validate email
+        echo '<div class="alert alert-primary" role="alert">';
+
         if(empty($_POST['email'])){
-            echo 'email is required <br/>';
+            $mailerror = 'email is required <br/>';
+            echo $mailerror;
         } else {
             $email = $_POST['email'];
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                echo 'email must be a valid address <br/>';
+                $mailerror = 'email must be a valid address <br/>';
+                echo $mailerror;
             }        
         }
+    
 
         //validate street
         if(empty($_POST['street'])){
-            echo 'street is required <br/>';
+            $streeterror= 'street is required <br/>';
+            echo $streeterror;
         } 
-        
-        /*else {
+        else {
             $street = $_POST['street'];
             if (!preg_match('/^[a-zA-Z0-9\s\-]+$/', $street)){
-                echo 'street must have valid characters. <br/>';
+                $streeterror = 'street must have valid characters. <br/>';
+                echo $streeterror;
             }
-        }*/
+        }
 
 
         //validate streetnumber
         if(empty($_POST['streetnumber'])){
-            echo 'number is required <br/>';
+            $numbererror = 'number is required <br/>';
+            echo $numbererror;
         } 
-        /*else {
+        else {
             $streetnumber = $_POST['streetnumber'];
             if (!preg_match('/^[a-zA-Z0-9\s]+$/', $streetnumber)){
-                echo 'number must have valid characters. <br/>';
+                $numbererror = 'number must have valid characters. <br/>';
+                echo $numbererror;
             }
-        }*/
-
+        }
+        
         //validate city
         if(empty($_POST['city'])){
-            echo 'city is required <br/>';
+            $cityerror = 'city is required <br/>';
+            echo $cityerror;
         } 
-        /*else {
+        else {
             $city = $_POST['city'];
             if (!preg_match('/^[a-zA-Z0-9\s\-]+$/', $city)){
-                echo 'city must have valid characters. <br/>';
+                $cityerror = 'city must have valid characters. <br/>';
+                echo $cityerror;
             }
-        }*/
+        }
 
-
+        
         //validate zipcode
         if(empty($_POST['zipcode'])){
-            echo 'zipcode is required <br/>';
+            $ziperror = 'zipcode is required <br/>';
+            echo $ziperror;
         } 
-        /*else {
+        else {
             $zipcode = $_POST['zipcode'];
-            if (!preg_match('/^[a-zA-Z0-9\s]+$/', $zipcode)){
-                echo 'zipcode must have valid characters. <br/>';
+            if (!is_numeric($zipcode)){
+                $ziperror = 'zipcode must have valid characters. <br/>';
+                echo $ziperror;
             }
-        }*/
+        }
+        
+        
+        echo '</div>';
     }
-        //validate checkbox
-       
+   
         
 ?>
 
@@ -96,7 +121,12 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control"/>
+                <input type="text" id="email" name="email" value="<?php if (!empty($_POST['email'])) {
+                                                                            echo $_POST['email'];
+                                                                            } elseif (!empty($_SESSION['email'])) {
+                                                                            echo $_SESSION['email'];
+                                                                            }
+                                                                            ?>"  class="form-control">
             </div>
             <div></div>
         </div>
@@ -107,82 +137,57 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control">
+                    <input type="text" name="street" value="<?php if (!empty($_POST['street'])) {
+                                                                            echo $_POST['street'];
+                                                                            } elseif (!empty($_SESSION['street'])) {
+                                                                            echo $_SESSION['street'];
+                                                                            }
+                                                                            ?>"  class="form-control" id="street" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                    <input type="text" id="streetnumber" name="streetnumber" value="<?php if (!empty($_POST['streetnumber'])) {
+                                                                            echo $_POST['streetnumber'];
+                                                                            } elseif (!empty($_SESSION['streetnumber'])) {
+                                                                            echo $_SESSION['streetnumber'];
+                                                                            }
+                                                                            ?>" class="form-control">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control">
+                    <input type="text" id="city" name="city" value="<?php if (!empty($_POST['city'])) {
+                                                                            echo $_POST['city'];
+                                                                            } elseif (!empty($_SESSION['city'])) {
+                                                                            echo $_SESSION['city'];
+                                                                            }
+                                                                            ?>" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control">
+                    <input type="text" id="zipcode" name="zipcode" value="<?php if (!empty($_POST['zipcode'])) {
+                                                                            echo $_POST['zipcode'];
+                                                                            } elseif (!empty($_SESSION['zipcode'])) {
+                                                                            echo $_SESSION['zipcode'];
+                                                                            }
+                                                                            ?>" class="form-control">
                 </div>
             </div>
         </fieldset>
 
         <fieldset>
-            <legend>Products</legend>
+          <legend>Products</legend>
+          <?php
+            foreach ($products as $i => $product) : ?>
+            <label>
+              <input type="checkbox" value="1" name="products[<?php echo $i ?>]" /> <?php echo $product['name'] ?> -
+              &euro; <?php echo number_format($product['price'], 2) ?></label><br />
+          <?php endforeach; ?>
+        </fieldset>            
+      
 
-            <?php                
-            
-           switch ($_SERVER['REQUEST_URI']){
-            case '/orderForm/?food=0':
-                foreach ($drinks as $product) {
-                    //echo 'for each drinks';
-                    echo '<label>';
-                    echo "<input type='checkbox' value='1' name='product'/> ";
-                    echo $product['name'];
-                    echo '- &euro; ';
-                    echo number_format($product['price'], 2) . '</label><br />'; 
-                    //echo 'line 154';
-                }
-                break;
-
-            default :
-                foreach ($food as $product) {
-                    //echo 'if food statement';
-                    echo '<label>';
-                    echo "<input type='checkbox' value='1' name='product'/> ";
-                    echo $product['name'];
-                    echo '- &euro; ';
-                    echo number_format($product['price'], 2) . '</label><br />';
-                }
-                break;
-            }
-
-            /*
-            if ($_SERVER['REQUEST_URI']=="/OrderForm/?food=0"){
-                foreach ($drinks['products'] as $i => $product) {
-                    echo 'first loop';
-                    echo '<label>';
-                    echo "<input type='checkbox' value='1' name='products[$i]'/> ";
-                    echo $product['name'];
-                    echo '- &euro; ';
-                    echo number_format($product['price'], 2) . '</label><br />'; 
-                    echo 'line 154';
-                }
-           }
-            else { echo "line156";
-                foreach ($food['products'] as $i => $product) {
-                    echo "line158";
-                    echo '<label>';
-                    echo "<input type='checkbox' value='1' name='products[$i]'/> ";
-                    echo $product['name'];
-                    echo '- &euro; ';
-                    echo number_format($product['price'], 2) . '</label><br />';
-                }
-            }*/
-            ?>
-
-        </fieldset>
-
-        <button type="submit" class="btn btn-primary">Order!</button>
+        <button type="submit" name="submit" value="submit" class="btn btn-primary">Order!</button>
     </form>
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
