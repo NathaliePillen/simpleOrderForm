@@ -1,6 +1,7 @@
 <?php
 //this line makes PHP behave in a more strict way
 declare(strict_types=1);
+
 //we are going to use session variables so we need to enable sessions
 session_start();
 
@@ -14,7 +15,7 @@ function whatIsHappening() {
     echo '<h2>$_SESSION</h2>';
 }
 
-whatIsHappening();
+
 
 //your products with their price.
 if (isset($_GET["food"]) && $_GET["food"] == 0) {
@@ -35,4 +36,14 @@ if (isset($_GET["food"]) && $_GET["food"] == 0) {
   };
 $totalValue = 0;
 include 'formView.php';
+
+/*var_dump($products);
+foreach ($products as $element) {
+  var_dump($element);
+}
+foreach ($products as $key => $value) {
+  var_dump($key);
+  var_dump($products[$key]);
+  var_dump($products[$key]["price"]);
+}*/
 
