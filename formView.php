@@ -73,14 +73,6 @@
 		} else {
             echo '<div class="alert alert-primary" role="alert">' . 'Your order has been send' . '</div>';
         }
-
-        if (isset($_POST["submit"])) {
-            $_SESSION['email'] = htmlspecialchars($_POST['email']);
-            $_SESSION['street'] = htmlspecialchars($_POST['street']);
-            $_SESSION['streetnumber'] = htmlspecialchars($_POST['streetnumber']);
-            $_SESSION['city'] = htmlspecialchars($_POST['city']);
-            $_SESSION['zipcode'] = htmlspecialchars($_POST['zipcode']);
-            }
     }
 
     
@@ -120,7 +112,14 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>"  class="form-control">
+                <input type="text" id="email" name="email" class="form-control" 
+                value="<?php
+                        if (!empty($_POST['email'])) {
+                            echo $_POST['email'];
+                      } elseif (!empty($_SESSION['email'])) {
+                            echo $_SESSION['email'];
+                      }
+                      ?>">
                 <div class="text-danger"><?php echo $errors['email']; ?></div>
             </div>
             <div></div>
@@ -132,12 +131,23 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" value="<?php echo htmlspecialchars($street); ?>" class="form-control" id="street" >
+                    <input type="text" name="street" class="form-control" id="street" value="<?php
+                        if (!empty($_POST['street'])) {
+                            echo $_POST['street'];
+                      } elseif (!empty($_SESSION['street'])) {
+                            echo $_SESSION['street'];
+                      }
+                      ?>"> 
                     <div class="text-danger"><?php echo $errors['street']; ?></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value=<?php echo htmlspecialchars($streetnumber); ?> >
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php
+                        if (!empty($_POST['streetnumber'])) {
+                            echo $_POST['streetnumber'];
+                      } elseif (!empty($_SESSION['streetnumber'])) {
+                            echo $_SESSION['streetnumber'];
+                      } ?>">
                     <div class="text-danger"><?php echo $errors['streetnumber']; ?></div>         
                 </div>
             </div>
@@ -145,12 +155,22 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" class="form-control" name="city" value=<?php echo htmlspecialchars($city); ?> >
+                    <input type="text" id="city" class="form-control" name="city" value="<?php
+                        if (!empty($_POST['city'])) {
+                            echo $_POST['city'];
+                      } elseif (!empty($_SESSION['city'])) {
+                            echo $_SESSION['city'];
+                      } ?>">
                     <div class="text-danger"><?php echo $errors['city']; ?></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" class="form-control" name="zipcode" value=<?php echo htmlspecialchars($zipcode); ?> >
+                    <input type="text" id="zipcode" class="form-control" name="zipcode" value="<?php
+                        if (!empty($_POST['zipcode'])) {
+                            echo $_POST['zipcode'];
+                      } elseif (!empty($_SESSION['zipcode'])) {
+                            echo $_SESSION['zipcode'];
+                      } ?>">
                     <div class="text-danger"><?php echo $errors['zipcode']; ?></div>
                 </div>
             </div>

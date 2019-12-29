@@ -5,6 +5,14 @@ declare(strict_types=1);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
+if (isset($_POST["submit"])) {
+  $_SESSION['email'] = htmlspecialchars($_POST['email']);
+  $_SESSION['street'] = htmlspecialchars($_POST['street']);
+  $_SESSION['streetnumber'] = htmlspecialchars($_POST['streetnumber']);
+  $_SESSION['city'] = htmlspecialchars($_POST['city']);
+  $_SESSION['zipcode'] = htmlspecialchars($_POST['zipcode']);
+ }
+
 function whatIsHappening() {
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
